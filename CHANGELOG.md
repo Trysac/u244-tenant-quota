@@ -9,4 +9,5 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added `tenant_quota` package for per-tenant quota enforcement over UTC calendar windows, including plan overrides, reservations, soft-limit events, and an in-memory store.
 - Initial project structure from the factory utility template.

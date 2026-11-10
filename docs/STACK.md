@@ -4,20 +4,16 @@
 
 | Tool | Why |
 |---|---|
-| Python >= 3.10 | Widest supported range that still allows modern typing syntax. |
-| uv | Fast, reproducible environments and builds on Windows and Linux. |
-| hatchling | Simple, standards-based build backend; no setup.py. |
-| ruff | Lint and format in one fast tool. |
-| mypy (strict) | Catches type errors before release; the package ships `py.typed`. |
-| pytest + pytest-cov | De facto standard test runner with branch coverage. |
-| gitleaks | Secret scanning locally and in CI. |
-| GitHub Actions + Dependabot | Thin CI wrapper over the local gates; weekly dependency updates. |
+| Python >= 3.10 | The code uses `X | None` unions and `from __future__ import annotations`; no runtime dependencies are allowed. |
+| Standard library | `logging`, `re`, `threading`, `uuid`, `collections.abc`, `dataclasses`, `datetime`, `math` and `typing` implement the package. |
+| `py.typed` | `src/tenant_quota/py.typed` marks the package as typed. |
+| pytest | `tests/test_tenant_quota.py` is a pytest module using fixtures and `pytest.raises`. |
 
 ## Discarded
 
 | Tool | Why not |
 |---|---|
-| Poetry | Slower, and uv covers the same needs with standard dependency groups. |
-| black + isort + flake8 | Replaced by ruff: one tool instead of three. |
-| tox / nox | The OS matrix lives in CI; locally a single `scripts/check.py` is enough. |
-| Shell scripts for gates | Not portable to Windows; the gates are a stdlib Python script. |
+| Runtime dependencies | The package is standard-library only. |
+| Redis or SQL store | Out of scope; callers can implement the `CounterStore` protocol. |
+| Rate limiter / token bucket | Out of scope; quotas use fixed calendar windows, not per-second limiting. |
+| Rolling windows | Out of scope; windows are fixed UTC calendar windows. |
